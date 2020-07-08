@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zsw.web.basic.send.mapper.SendMapper">
+
+    <resultMap id="BaseResultMap" type="com.zsw.web.basic.send.entity.SendEntity">
+        <id column="SEND_ID" jdbcType="CHAR" property="sendId"/>
+        <result column="SEND_NAME" jdbcType="VARCHAR" property="sendName"/>
+        <result column="SEND_SEX" jdbcType="TINYINT" property="sendSex"/>
+        <result column="SEND_PHONE" jdbcType="VARCHAR" property="sendPhone"/>
+        <result column="ADD_TIME" jdbcType="TIMESTAMP" property="addtime"/>
+    </resultMap>
+
+    <insert id="postSend" parameterType="com.zsw.web.basic.send.entity.SendEntity">
+        INSERT INTO zxw_basic_send
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sendId != null">
+                SEND_ID,
+            </if>
+            <if test="sendName != null">
+                SEND_NAME,
+            </if>
+            <if test="sendSex != null">
+                SEND_SEX,
+            </if>
+            <if test="sendPhone != null">
+                SEND_PHONE,
+            </if>
+            <if test="addTime != null">
+                ADD_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sendId != null">
+                #{sendId,jdbcType=CHAR},
+            </if>
+            <if test="sendName != null">
+                #{sendName,jdbcType=VARCHAR},
+            </if>
+            <if test="sendSex != null">
+                #{sendSex,jdbcType=TINYINT},
+            </if>
+            <if test="sendPhone != null">
+                #{sendPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

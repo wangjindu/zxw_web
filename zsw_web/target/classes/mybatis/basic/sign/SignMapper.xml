@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zsw.web.basic.sign.mapper.SignMapper">
+
+    <resultMap id="BaseResultMap" type="com.zsw.web.basic.sign.entity.SignEntity">
+        <id column="SIGN_ID" jdbcType="CHAR" property="signId"/>
+        <result column="SIGN_TYPE" jdbcType="TINYINT" property="signType"/>
+        <result column="SIGN_NAME" jdbcType="CHAR" property="signName"/>
+        <result column="SIGN_PHONE" jdbcType="CHAR" property="signPhone"/>
+        <result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime"/>
+    </resultMap>
+
+    <insert id="postSign" parameterType="com.zsw.web.basic.sign.entity.SignEntity">
+        insert into zxw_basic_sign
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="signId != null">
+                SIGN_ID,
+            </if>
+            <if test="signType != null">
+                SIGN_TYPE,
+            </if>
+            <if test="signName != null">
+                SIGN_NAME,
+            </if>
+            <if test="signPhone != null">
+                SIGN_PHONE,
+            </if>
+            <if test="addTime != null">
+                ADD_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="signId != null">
+                #{signId,jdbcType=CHAR},
+            </if>
+            <if test="signType != null">
+                #{signType,jdbcType=TINYINT},
+            </if>
+            <if test="signName != null">
+                #{signName,jdbcType=CHAR},
+            </if>
+            <if test="signPhone != null">
+                #{signPhone,jdbcType=CHAR},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

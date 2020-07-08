@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zsw.web.website.banner.mapper.BannerMapper">
+
+    <cache eviction="LRU" flushInterval="600000" size="1024" readOnly="true"/>
+
+    <resultMap id="BaseResultMap" type="com.zsw.web.website.banner.entity.BannerEntity">
+        <id column="BANNER_ID" jdbcType="CHAR" property="bannerId"/>
+        <result column="BANNER_TITLE" jdbcType="VARCHAR" property="bannerTitle"/>
+        <result column="BANNER_ICON" jdbcType="VARCHAR" property="bannerIcon"/>
+        <result column="BANNER_URL" jdbcType="VARCHAR" property="bannerUrl"/>
+        <result column="BANNER_FLAG" jdbcType="CHAR" property="bannerFlag"/>
+        <result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="BANNER_TYPE" jdbcType="TINYINT" property="bannerType"/>
+    </resultMap>
+
+    <select id="getAllPhBanner" resultMap="BaseResultMap">
+        select b.BANNER_ID, b.BANNER_TITLE, b.BANNER_ICON, b.BANNER_URL
+        from zxw_website_banner b
+        where b.BANNER_FLAG = 'true' and b.BANNER_TYPE = 2
+        order by b.ADD_TIME desc ;
+    </select>
+
+    <select id="getAllPcBanner" resultMap="BaseResultMap">
+        select b.BANNER_ID, b.BANNER_TITLE, b.BANNER_ICON, b.BANNER_URL
+        from zxw_website_banner b
+        where b.BANNER_FLAG = 'true' and b.BANNER_TYPE = 1
+        order by b.ADD_TIME desc ;
+    </select>
+
+
+</mapper>

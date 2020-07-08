@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zsw.web.basic.letter.mapper.LetterMapper">
+
+    <resultMap id="BaseResultMap" type="com.zsw.web.basic.letter.entity.LetterEntity">
+        <id column="LETTER_ID" jdbcType="CHAR" property="letterId"/>
+        <result column="LETTER_TYPE" jdbcType="TINYINT" property="letterType"/>
+        <result column="LETTER_CONTENT" jdbcType="VARCHAR" property="letterContent"/>
+        <result column="LETTER_PHONE" jdbcType="VARCHAR" property="letterPhone"/>
+        <result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime"/>
+    </resultMap>
+
+    <insert id="postLetter" parameterType="com.zsw.web.basic.letter.entity.LetterEntity">
+        INSERT INTO zxw_basic_letter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="letterId != null">
+                LETTER_ID,
+            </if>
+            <if test="letterType != null">
+                LETTER_TYPE,
+            </if>
+            <if test="letterContent != null">
+                LETTER_CONTENT,
+            </if>
+            <if test="letterPhone != null">
+                LETTER_PHONE,
+            </if>
+            <if test="addTime != null">
+                ADD_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="letterId != null">
+                #{letterId,jdbcType=CHAR},
+            </if>
+            <if test="letterType != null">
+                #{letterType,jdbcType=TINYINT},
+            </if>
+            <if test="letterContent != null">
+                #{letterContent,jdbcType=VARCHAR},
+            </if>
+            <if test="letterPhone != null">
+                #{letterPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getCountLetter" resultType="int">
+        select count(*) from zxw_basic_letter
+    </select>
+
+</mapper>

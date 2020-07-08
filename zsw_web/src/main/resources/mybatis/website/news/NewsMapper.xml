@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsw.web.website.news.mapper.NewsMapper">
+
+    <cache eviction="LRU" flushInterval="600000" size="1024" readOnly="true"/>
+
+    <resultMap id="BaseResultMap" type="com.zsw.web.website.news.entity.NewsEntity">
+        <id column="NEWS_ID" jdbcType="CHAR" property="newsId"/>
+        <result column="NEWS_SCOURCE" jdbcType="CHAR" property="newsScource"/>
+        <result column="NEWS_TYPE" jdbcType="TINYINT" property="newsType"/>
+        <result column="NEWS_TITLE" jdbcType="VARCHAR" property="newsTitle"/>
+        <result column="NEWS_ICON" jdbcType="VARCHAR" property="newsIcon"/>
+        <result column="NEWS_SUMMARY" jdbcType="LONGVARCHAR" property="newsSummary"/>
+        <result column="NEWS_CONTENT" jdbcType="LONGVARCHAR" property="newsContent"/>
+        <result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="READ_COUNT" jdbcType="BIGINT" property="readCount"/>
+        <result column="SEARCH_KEY" jdbcType="TINYINT" property="searchKey"/>
+    </resultMap>
+
+    <select id="get7News" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        order by n.ADD_TIME desc
+        limit 0,7
+    </select>
+
+    <select id="getNewsNum" resultType="Integer">
+        select count(1)
+        from zxw_website_news;
+    </select>
+
+    <select id="get4News" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        order by n.ADD_TIME desc
+        limit 0,4
+    </select>
+
+    <select id="get4HotNews" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        order by n.READ_COUNT desc
+        limit 0,4
+    </select>
+
+    <select id="get8HotNews" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        order by n.READ_COUNT desc
+    </select>
+
+    <select id="get4NewsByType" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        where n.NEWS_TYPE = #{newsType, jdbcType = TINYINT}
+        order by n.ADD_TIME desc
+        limit 0,5
+    </select>
+
+    <select id="getAllNews" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        order by n.ADD_TIME desc
+    </select>
+
+    <select id="getAllNewsByType" resultMap="BaseResultMap" parameterType="Integer">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        where n.NEWS_TYPE = #{newsType, jdbcType = TINYINT}
+        order by n.ADD_TIME desc
+    </select>
+
+    <select id="getNewsById" parameterType="String" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        where n.NEWS_ID = #{newsId, jdbcType = CHAR}
+    </select>
+
+    <select id="getNewsByType" parameterType="int" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_SCOURCE, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_ICON, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.ADD_TIME, n.READ_COUNT, n.SEARCH_KEY
+        from zxw_website_news n
+        where n.NEWS_TYPE = #{newsType, jdbcType = TINYINT}
+    </select>
+
+    <update id="putNewsById" parameterType="com.zsw.web.website.news.entity.NewsEntity">
+        update zxw_website_news
+        <trim prefix="set" suffixOverrides=",">
+            <if test="newsScource != null">
+                NEWS_SCOURCE = #{newsScource, jdbcType = CHAR},
+            </if>
+            <if test="newsType != null">
+                NEWS_TYPE = #{newsType, jdbcType = TINYINT},
+            </if>
+            <if test="newsTitle != null">
+                NEWS_TITLE = #{newsTitle, jdbcType = VARCHAR},
+            </if>
+            <if test="newsIcon != null">
+                NEWS_ICON = #{newsIcon, jdbcType = VARCHAR},
+            </if>
+            <if test="newsSummary != null">
+                NEWS_SUMMARY = #{newsSummary, jdbcType = LONGVARCHAR},
+            </if>
+            <if test="newsContent != null">
+                NEWS_CONTENT = #{newsContent, jdbcType = LONGVARCHAR},
+            </if>
+            <if test="addTime != null">
+                ADD_TIME = #{addTime, jdbcType = TIMESTAMP},
+            </if>
+            <if test="readCount != null">
+                READ_COUNT = #{readCount, jdbcType = BIGINT},
+            </if>
+            <if test="searchKey != null">
+                SEARCH_KEY = #{searchKey, jdbcType = TINYINT},
+            </if>
+        </trim>
+        where NEWS_ID = #{newsId, jdbcType = CHAR}
+    </update>
+
+    <select id="getNewsRedAllCount" resultType="int">
+        SELECT SUM(READ_COUNT) FROM zxw_website_news
+    </select>
+
+    <select id="getAllNewsForSearch" resultMap="BaseResultMap">
+        select n.NEWS_ID, n.NEWS_TYPE, n.NEWS_TITLE, n.NEWS_SUMMARY, n.NEWS_CONTENT, n.NEWS_SCOURCE, n.ADD_TIME, n.SEARCH_KEY
+        from zxw_website_news n
+    </select>
+</mapper>
